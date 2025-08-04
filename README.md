@@ -1,9 +1,9 @@
 <div align="center">
 
-#  POLARIS
+#  SWE-Swiss
 
 <div>
-   🌠 A <strong>PO</strong>st-training recipe for scaling R<strong>L</strong> on <strong>A</strong>dvanced <strong>R</strong>eason<strong>I</strong>ng model<strong>S</strong> 🚀
+   🌠 SWE-Swiss: A Multi-Task Fine-Tuning and RL Recipe for High-Performance Issue Resolution 🚀
 </div>
 </div>
 <div>
@@ -67,7 +67,7 @@ We release the following assets to the community:
 All of the TODOs will be finished within this week.
 
 ## Citation
-```
+```bibtex
 @misc{SWESwiss2025,
     title = {SWE-Swiss: A Multi-Task Fine-Tuning and RL Recipe for High-Performance Issue Resolution},
     url = {https://www.notion.so/SWE-Swiss-A-Multi-Task-Fine-Tuning-and-RL-Recipe-for-High-Performance-Issue-Resolution-21e174dedd4880ea829ed4c861c44f88},
