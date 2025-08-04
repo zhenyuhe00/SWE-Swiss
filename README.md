@@ -1,15 +1,5 @@
-<div align="center">
+<img src="figures/sweswiss_logo.png" alt="SWE-Swiss" width="100" align="left"><div align="center"><h1>&nbsp;SWE-Swiss: A Multi-Task Fine-Tuning and RL Recipe for High-Performance Issue Resolution</h1></div>
 
-#  SWE-Swiss
-
-<div>
-   🌠 SWE-Swiss: A Multi-Task Fine-Tuning and RL Recipe for High-Performance Issue Resolution 🚀
-</div>
-</div>
-<div>
-<br>
-
-<div align="center">
 
 [![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://www.notion.so/SWE-Swiss-A-Multi-Task-Fine-Tuning-and-RL-Recipe-for-High-Performance-Issue-Resolution-21e174dedd4880ea829ed4c861c44f88#245174dedd488067a9e7eea04315dad5)
 [![Hugging Face Model](https://img.shields.io/badge/models-%23000000?style=for-the-badge&logo=huggingface&logoColor=000&logoColor=white)](https://huggingface.co/SWE-Swiss/models)
