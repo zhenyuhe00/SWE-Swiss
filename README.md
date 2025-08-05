@@ -53,9 +53,10 @@ We release the following assets to the community:
 - **All Curated Datasets:** The SFT and RL datasets are available on the [Hugging Face Hub](https://huggingface.co/SWE-Swiss/datasets).
 
 ## TODO
-- [] Guidelines of the evaluation pipeline
-- [] Evaluation results
-- [] SFT model weights and RL model weghts
+- [ ] Guidelines of SFT
+- [ ] Guidelines of the evaluation pipeline
+- [ ] Evaluation results
+- [x] SFT model weights and RL model weghts
 - [x] SFT data and RL data
 
 All of the TODOs will be finished within this week.
