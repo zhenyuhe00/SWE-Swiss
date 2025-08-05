@@ -21,7 +21,7 @@
 
 ## 📖 About The Project
 
-**SWE-Swiss** presents a comprehensive recipe for creating high-performance model that can resolve real-world software issues. Our work introduces a methodology that significantly boosts the efficiency of language models, enabling our **32B** parameter model (`SWE-Swiss-32B`) to achieve a **60.2%** success rate on the SWE-bench Verified benchmark, a performance comparable to models more than double its size.
+**SWE-Swiss** presents a comprehensive recipe for creating high-performance model that can resolve real-world software issues. Our work introduces a methodology that significantly boosts the software engineering abilities of LLMs, enabling our **32B** parameter model (`SWE-Swiss-32B`) to achieve a **60.2%** success rate on the SWE-bench Verified benchmark, a performance comparable to models more than double its size.
 
 This repository contains the official code, data, and instructions to reproduce the results from our work, "SWE-Swiss: A Multi-Task Fine-Tuning and RL Recipe for High-Performance Issue Resolution".
 
