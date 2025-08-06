@@ -55,7 +55,7 @@ We release the following assets to the community:
 ## TODO
 - [ ] Guidelines of SFT
 - [ ] Guidelines of the evaluation pipeline
-- [ ] Evaluation results
+- [x] Evaluation results
 - [x] SFT model weights and RL model weghts
 - [x] SFT data and RL data
 
