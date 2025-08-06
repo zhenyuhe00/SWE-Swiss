@@ -52,6 +52,9 @@ We release the following assets to the community:
 - **Weights for `SWE-Swiss-32B` and `SWE-Swiss-32B-SFT`:** Available on the [Hugging Face Hub](https://huggingface.co/SWE-Swiss/models).
 - **All Curated Datasets:** The SFT and RL datasets are available on the [Hugging Face Hub](https://huggingface.co/SWE-Swiss/datasets).
 
+## Evaluation Results
+The evaluation results are in the [results folder](results/).
+
 ## TODO
 - [ ] Guidelines of SFT
 - [ ] Guidelines of the evaluation pipeline
