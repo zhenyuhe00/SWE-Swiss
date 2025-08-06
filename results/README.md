@@ -59,5 +59,5 @@ print(f"Score: {final_score:.1f}%")
 ## Complete Evaluation Traces
 We provide the complete evaluation traces for full transparency and reproducibility:
 * [40patches_results0](https://drive.google.com/file/d/1AVprnPGb0hchCwCb-iQRSR8midoMeAXP/view?usp=drive_link)
-* 40patches_results1 (Upload in progress, file size is large)
+* [40patches_results1](https://drive.google.com/file/d/1p3TtRH0Ca49_iJhPeIV4e2d6hw6tCUAw/view?usp=sharing)
 * 40patches_results2 (Upload in progress, file size is large)
