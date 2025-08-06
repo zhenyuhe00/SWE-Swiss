@@ -56,7 +56,7 @@ We release the following assets to the community:
 The evaluation results are in the [results folder](results/).
 
 ## TODO
-- [ ] Guidelines of SFT
+- [x] Guidelines of SFT
 - [ ] Guidelines of the evaluation pipeline
 - [x] Evaluation results
 - [x] SFT model weights and RL model weghts

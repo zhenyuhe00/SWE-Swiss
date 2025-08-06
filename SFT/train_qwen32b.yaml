@@ -1,0 +1,45 @@
+### model
+model_name_or_path: /mnt/bn/hzy-pretrain/cache/Qwen/Qwen2.5-3B-Instruct # Qwen/Qwen2.5-32B-Instruct
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+deepspeed: examples/deepspeed/ds_z3_config.json  # choices: [ds_z0_config.json, ds_z2_config.json, ds_z3_config.json]
+
+### dataset
+dataset: SWESwiss-SFT-Merged-10K
+template: qwen
+cutoff_len: 102400
+max_samples: 20000 
+overwrite_cache: false
+preprocessing_num_workers: 64
+
+### output
+output_dir: My-SWE-Swiss-32B-SFT # save path
+logging_steps: 10
+save_steps: 50
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+weight_decay: 0.1
+flash_attn: fa2
+enable_liger_kernel: true
+use_unsloth_gc: true
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 1
+learning_rate: 2.0e-5
+num_train_epochs: 4.0 # Alghough we train for 4 epochs, we use the checkpoint at epoch 2.
+lr_scheduler_type: cosine
+warmup_ratio: 0.01
+bf16: true
+ddp_timeout: 180000000
+
+### eval
+do_eval: false
+
+### wandb
+report_to: wandb
+run_name: My-SWE-Swiss-32B-SFT
