@@ -143,7 +143,7 @@ Run the following command to generate the patches:
 
 ```shell
 python agentless/repair/repair.py --loc_file results/swe-bench-verified/file_level_combined_1/combined_locs.jsonl \
-                                  --output_folder results/swe-bench-lite/repair_sample_1 \
+                                  --output_folder results/swe-bench-verified/repair_sample_1 \
                                   --loc_interval \
                                   --top_n=3 \
                                   --context_window=10 \
@@ -159,8 +159,8 @@ python agentless/repair/repair.py --loc_file results/swe-bench-verified/file_lev
 
 ```shell
 for i in {2..4}; do
-    python agentless/repair/repair.py --loc_file results/swe-bench-lite/file_level_combined_{i}/combined_locs.jsonl \
-                                    --output_folder results/swe-bench-lite/repair_sample_$(i) \
+    python agentless/repair/repair.py --loc_file results/swe-bench-verified/file_level_combined_{i}/combined_locs.jsonl \
+                                    --output_folder results/swe-bench-verified/repair_sample_$(i) \
                                     --loc_interval \
                                     --top_n=3 \
                                     --context_window=10 \
@@ -175,7 +175,7 @@ done
 </div>
 </details>
 
-These commands generate 10 samples each (1 greedy and 9 via temperature sampling) as defined `--max_samples 10`. The `--context_window` indicates the amount of code lines before and after each localized edit location we provide to the model for repair. The patches are saved in `results/swe-bench-lite/repair_sample_{i}/output.jsonl`, which contains the raw output of each sample as well as any trajectory information (e.g., number of tokens). The complete logs are also saved in `results/swe-bench-lite/repair_sample_{i}/repair_logs/` 
+These commands generate 10 samples each (1 greedy and 9 via temperature sampling) as defined `--max_samples 10`. The `--context_window` indicates the amount of code lines before and after each localized edit location we provide to the model for repair. The patches are saved in `results/swe-bench-verified/repair_sample_{i}/output.jsonl`, which contains the raw output of each sample as well as any trajectory information (e.g., number of tokens). The complete logs are also saved in `results/swe-bench-verified/repair_sample_{i}/repair_logs/` 
 
 The above commands will combine to generate 40 samples in total for each bug. 
 
@@ -193,10 +193,10 @@ Run the following command to get a list of passing tests in the original codebas
 
 ```shell
 python agentless/test/run_regression_tests.py --run_id generate_regression_tests \
-                                              --output_file results/swe-bench-lite/passing_tests.jsonl 
+                                              --output_file results/swe-bench-verified/passing_tests.jsonl 
 ```
 
-This will generate a list of passing tests at `results/swe-bench-lite/passing_tests.jsonl`
+This will generate a list of passing tests at `results/swe-bench-verified/passing_tests.jsonl`
 
 > [!NOTE]
 > 
@@ -207,25 +207,25 @@ This will generate a list of passing tests at `results/swe-bench-lite/passing_te
 Next, we ask the LLM to remove any tests which should not be ran with the following command:
 
 ```shell
-python agentless/test/select_regression_tests.py --passing_tests results/swe-bench-lite/passing_tests.jsonl \
-                                                 --output_folder results/swe-bench-lite/select_regression 
+python agentless/test/select_regression_tests.py --passing_tests results/swe-bench-verified/passing_tests.jsonl \
+                                                 --output_folder results/swe-bench-verified/select_regression 
 ```
 
-This will produce a list of final regression tests in `results/swe-bench-lite/select_regression/output.jsonl` with the logs at `results/swe-bench-lite/select_regression/select_test_logs`
+This will produce a list of final regression tests in `results/swe-bench-verified/select_regression/output.jsonl` with the logs at `results/swe-bench-verified/select_regression/select_test_logs`
 
 We can run this on all the patches generate, repeated for each repair run (i.e., by changing `folder`):
 
 ```shell
-folder=results/swe-bench-lite/repair_sample_1
+folder=results/swe-bench-verified/repair_sample_1
 for num in {0..9..1}; do
     run_id_prefix=$(basename $folder); 
-    python agentless/test/run_regression_tests.py --regression_tests results/swe-bench-lite/select_regression/output.jsonl \
+    python agentless/test/run_regression_tests.py --regression_tests results/swe-bench-verified/select_regression/output.jsonl \
                                                   --predictions_path="${folder}/output_${num}_processed.jsonl" \
                                                   --run_id="${run_id_prefix}_regression_${num}" --num_workers 10;
 done
 ```
 
-This will output the regression test results in the same folder as the repair results. `results/swe-bench-lite/repair_sample_1/output_{i}_regression_test_results.jsonl` contains the regression test results for each patch number (`i`). 
+This will output the regression test results in the same folder as the repair results. `results/swe-bench-verified/repair_sample_1/output_{i}_regression_test_results.jsonl` contains the regression test results for each patch number (`i`). 
 
 > [!NOTE]
 > 
@@ -240,12 +240,12 @@ In addition to the regression tests, Agentless also generates a reproduction tes
 Similar to patch generation, Agentless also generates multiple samples of reproduction tests, and then perform selection:
 ```shell
 python agentless/test/generate_reproduction_tests.py --max_samples 40 \
-                                                     --output_folder results/swe-bench-lite/reproduction_test_samples \
-                                                     --loc_file results/swe-bench-lite/file_level_combined_1/combined_locs.jsonl \
+                                                     --output_folder results/swe-bench-verified/reproduction_test_samples \
+                                                     --loc_file results/swe-bench-verified/file_level_combined_1/combined_locs.jsonl \
                                                      --num_threads 10 
 ```
 
-This will generate 40 samples (1 greedy + 39 temperature sampling) per issue. The generated reproduction tests can be found in `results/swe-bench-lite/reproduction_test_samples/output.jsonl`. The corresponding logs can be found in `results/swe-bench-lite/reproduction_test_samples/generating_test_logs/`.
+This will generate 40 samples (1 greedy + 39 temperature sampling) per issue. The generated reproduction tests can be found in `results/swe-bench-verified/reproduction_test_samples/output.jsonl`. The corresponding logs can be found in `results/swe-bench-verified/reproduction_test_samples/generating_test_logs/`.
 
 Now we will execute each of these generated tests on the original repository to see if they can reproduce the original issue.
 
@@ -255,7 +255,7 @@ for st in {0..36..4}; do   en=$((st + 3));
         for num in $(seq $st $en); do     
             echo "Processing ${num}";     
             python agentless/test/run_reproduction_tests.py --run_id="reproduction_test_generation_filter_sample_${num}" \
-                                                            --test_jsonl="results/swe-bench-lite/reproduction_test_samples/output_${num}_processed_reproduction_test.jsonl" \
+                                                            --test_jsonl="results/swe-bench-verified/reproduction_test_samples/output_${num}_processed_reproduction_test.jsonl" \
                                                             --num_workers 6 \
                                                             --testing;
 done & done
@@ -267,32 +267,32 @@ done & done
 >
 > If not, you may want to reduce the amount of parallelization 
 
-This produces verification results for each tests in the same folder: `results/swe-bench-lite/reproduction_test_samples/`
+This produces verification results for each tests in the same folder: `results/swe-bench-verified/reproduction_test_samples/`
 
 We then perform majority voting to select one reproduction test per issue:
 
 ```shell
 python agentless/test/generate_reproduction_tests.py --max_samples 40 \
-                                                     --output_folder results/swe-bench-lite/reproduction_test_samples \
+                                                     --output_folder results/swe-bench-verified/reproduction_test_samples \
                                                      --output_file reproduction_tests.jsonl \
                                                      --select
 ```
 
-This will generate the reproduction test file at: `results/swe-bench-lite/reproduction_test_samples/reproduction_tests.jsonl`
+This will generate the reproduction test file at: `results/swe-bench-verified/reproduction_test_samples/reproduction_tests.jsonl`
 
 Finally, we evaluate the generated patches on the selected reproduction test. Similar to regression test execution, this is repeated for each repair run (i.e., by changing `folder`):
 
 ```shell
-folder=results/swe-bench-lite/repair_sample_1
+folder=results/swe-bench-verified/repair_sample_1
 for num in {0..9..1}; do
     run_id_prefix=$(basename $folder); 
-    python agentless/test/run_reproduction_tests.py --test_jsonl results/swe-bench-lite/reproduction_test_samples/reproduction_tests.jsonl \
+    python agentless/test/run_reproduction_tests.py --test_jsonl results/swe-bench-verified/reproduction_test_samples/reproduction_tests.jsonl \
                                                     --predictions_path="${folder}/output_${num}_processed.jsonl" \
                                                     --run_id="${run_id_prefix}_reproduction_${num}" --num_workers 10;
 done
 ```
 
- This will output the reproduction test results in the same folder as the repair results. `results/swe-bench-lite/repair_sample_1/output_{i}_reproduction_test_results.jsonl` contains the reproduction test results for each patch number (`i`). 
+ This will output the reproduction test results in the same folder as the repair results. `results/swe-bench-verified/repair_sample_1/output_{i}_reproduction_test_results.jsonl` contains the reproduction test results for each patch number (`i`). 
 
 
 #### Reranking and patch selection 
@@ -302,7 +302,7 @@ Finally, using the regression and reproduction test results, Agentless performs 
 Run the following command (`--regression` indicates we are using regression tests for selection `--reproduction` indicates we are using the reproduction tests for selection)
 
 ```shell
-python agentless/repair/rerank.py --patch_folder results/swe-bench-lite/repair_sample_1/,results/swe-bench-lite/repair_sample_2/,results/swe-bench-lite/repair_sample_3/,results/swe-bench-lite/repair_sample_4/ \
+python agentless/repair/rerank.py --patch_folder results/swe-bench-verified/repair_sample_1/,results/swe-bench-verified/repair_sample_2/,results/swe-bench-verified/repair_sample_3/,results/swe-bench-verified/repair_sample_4/ \
                                   --num_samples 40 \
                                   --deduplicate \
                                   --regression \
