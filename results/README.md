@@ -8,7 +8,7 @@ Our evaluation process is adapted from the [Agentless framework](https://github.
 
 1.  **Simplified Localization:** Inspired by [Agentless Mini](https://github.com/facebookresearch/swe-rl/tree/main), we streamline the localization stage. Instead of the original hierarchical process (file → class/function → final location), our model is only required to identify the relevant files for a given issue. We retain the use of an embedding-based model for this step as in the original Agentless approach.
 
-2.  **Enriched Prompts for Patch Generation:** During the patch generation phase, we enhance the model's input prompt. In addition to the original issue description, we directly incorporate the full contents of the relevant files identified in the localization stage.
+2.  **Enriched Prompts for Unit Test Generation:** During the unit test generation phase, we enhance the model's input prompt. In addition to the original issue description, we directly incorporate the full contents of the relevant files identified in the localization stage.
 
 3.  **Enhanced Self-Consistency for Patch Selection:** For the final patch selection, we replace the standard self-consistency method (majority vote) with our own enhanced self-consistency algorithm. This allows for a more nuanced selection from the generated patches.
 

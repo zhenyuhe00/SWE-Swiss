@@ -56,11 +56,14 @@ We release the following assets to the community:
 The evaluation results are in the [results folder](results/).
 
 ## Guidelines for Supervised Fine-Tuning (SFT)
-Please refer to the detailed instructions provided in the [SFT](SFT/) directory for implementation guidelines,
+Please refer to the detailed instructions provided in the [SFT](SFT/) directory for implementation guidelines.
+
+## Guidelines for the Evaluation Pipeline
+Please refer to the detailed instructions provided in the [evaluation](evaluation/) directory for implementation guidelines.
 
 ## TODO
 - [x] Guidelines for SFT
-- [ ] Guidelines for the evaluation pipeline
+- [x] Guidelines for the evaluation pipeline
 - [x] Evaluation results
 - [x] SFT model weights and RL model weghts
 - [x] SFT data and RL data
