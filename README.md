@@ -61,14 +61,66 @@ Please refer to the detailed instructions provided in the [SFT](SFT/) directory 
 ## Guidelines for the Evaluation Pipeline
 Please refer to the detailed instructions provided in the [evaluation](evaluation/) directory for implementation guidelines.
 
-## TODO
-- [x] Guidelines for SFT
-- [x] Guidelines for the evaluation pipeline
-- [x] Evaluation results
-- [x] SFT model weights and RL model weghts
-- [x] SFT data and RL data
 
-All of the TODOs will be finished within this week.
+## How to Use the Model
+
+### Transformers
+You can use the `transformers` library to load and run `SWE-Swiss-32B`.
+
+```python
+import torch
+import torch.nn as nn
+import transformers
+from transformers import AutoModelForCausalLM, AutoTokenizer
+# We set the o_bias in the attention module to True to be compatible with our code base.
+def apply_qwen2_bias_patch():
+    Qwen2Attention = transformers.models.qwen2.modeling_qwen2.Qwen2Attention
+    original_qwen2_attention_init = Qwen2Attention.__init__
+    def patched_qwen2_attention_init(self, config, layer_idx):
+        original_qwen2_attention_init(self, config, layer_idx)
+        self.o_proj = nn.Linear(config.num_attention_heads * self.head_dim, config.hidden_size, bias=True)
+    Qwen2Attention.__init__ = patched_qwen2_attention_init
+apply_qwen2_bias_patch()
+model_id = "SWE-Swiss/SWE-Swiss-32B" 
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    torch_dtype=torch.bfloat16,
+    device_map="auto"
+)
+```
+
+### vLLM
+You can also use the [`vLLM`](https://github.com/vllm-project/vllm) library to load and run `SWE-Swiss-32B`.
+
+Firstly. git clone the vLLM repository.
+```
+git clone https://github.com/vllm-project/vllm
+cd vllm
+git checkout v0.8.4 # or other versions compatible with Qwen2.
+```
+
+Then, change the [o_bias in the attention module](https://github.com/vllm-project/vllm/blob/v0.8.4/vllm/model_executor/models/qwen2.py#L148) to True and install vllm.
+
+```
+# please remember to set "bias=False" to "bias=True" before install vLLM.
+pip3 install -e .
+```
+
+Finally, use vLLM as usual:
+```python
+from vllm import LLM, SamplingParams
+prompts = [
+    "How are you?",
+]
+sampling_params = SamplingParams(temperature=0.6, top_p=0.95)
+llm = LLM(model="SWE-Swiss/SWE-Swiss-32B", tensor_parallel_size=8, max_model_len=102400)
+outputs = llm.generate(prompts, sampling_params)
+for output in outputs:
+    prompt = output.prompt
+    generated_text = output.outputs[0].text
+    print(f"Prompt: {prompt!r}, Generated text: {generated_text!r}")
+```
 
 ## Citation
 ```bibtex
