@@ -34,5 +34,6 @@ Note: This command is configured for a multi-node environment. You may need to a
 cd LLaMA-Factory
 # Set environment variables and launch the training script
 # IMPORTANT: Replace $MASTER_ADDR and $NODE_RANK with your cluster's environment variables.
+# In our experiments, we use 64 A100 GPUs for training.
 DISABLE_VERSION_CHECK=1 FORCE_TORCHRUN=1 NNODES=$NNODES MASTER_ADDR=$MASTER_ADDR NODE_RANK=$NODE_RANK MASTER_PORT=10086 llamafactory-cli train ../train_qwen32b.yaml
 ```
