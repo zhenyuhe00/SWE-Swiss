@@ -1,5 +1,5 @@
 ### model
-model_name_or_path: /mnt/bn/hzy-pretrain/cache/Qwen/Qwen2.5-3B-Instruct # Qwen/Qwen2.5-32B-Instruct
+model_name_or_path: Qwen/Qwen2.5-32B-Instruct
 trust_remote_code: true
 
 ### method
