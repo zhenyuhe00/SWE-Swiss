@@ -126,7 +126,7 @@ for output in outputs:
 ```bibtex
 @misc{SWESwiss2025,
     title={SWE-Swiss: A Multi-Task Fine-Tuning and RL Recipe for High-Performance Issue Resolution},
-    author={He, Zhenyu and Yang, Qingping and Sheng, Wei and Zhong, Xiaojian and Zhang, Kechi and An, Chenxin and Shi, Wenlei and Cai, Tianle and He, Di and Chen, Jiaze and Xu, Jingjing and Wang, Mingxuan},
+    author={He, Zhenyu and Yang, Qingping and Sheng, Wei and Zhong, Xiaojian and Zhang, Kechi and An, Chenxin and Shi, Wenlei and Cai, Tianle and He, Di and Chen, Jiaze and Xu, Jingjing},
     howpublished={\url{https://www.notion.so/SWE-Swiss-A-Multi-Task-Fine-Tuning-and-RL-Recipe-for-High-Performance-Issue-Resolution-21e174dedd4880ea829ed4c861c44f88}},
     note={Notion Blog},
     year={2025}
